@@ -1,1 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔记大纲 | 客户第一 — 华为客户关系管理法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        :root {
+            --primary: #0A2343;
+            --red: #D91E26;
+            --light: #F5F7FA;
+            --gray: #666;
+            --dark: #333;
+        }
+        body {
+            background: #fff;
+            color: var(--dark);
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .logo span {
+            color: var(--red);
+        }
+        .menu {
+            display: flex;
+            gap: 28px;
+        }
+        .menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        .menu a:hover, .menu a.active {
+            color: var(--red);
+        }
+        .page-title {
+            margin-top: 100px;
+            text-align: center;
+            font-size: 32px;
+            color: var(--primary);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        .outline-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .outline-card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--red);
+            padding-left: 12px;
+            scroll-margin-top: 110px; /* 避免固定导航栏遮住锚点定位的标题 */
+        }
+        .outline-card p {
+            color: #444;
+            padding-left: 16px;
+            margin-bottom: 8px;
+        }
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        @media (max-width: 768px) {
+            .menu { display: none; }
+            .page-title { font-size: 26px; }
+            .outline-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
 
+<header>
+    <div class="nav">
+        <div class="logo">《客户<span>第一</span>》读书笔记</div>
+        <div class="menu">
+            <a href="index.html">首页</a>
+            <a href="outline.html" class="active">笔记大纲</a>
+            <a href="models.html">核心工具和方法论</a>
+        </div>
+    </div>
+</header>
+
+<div class="page-title">《客户第一》完整读书笔记大纲</div>
+
+<div class="container">
+    <div class="outline-card">
+        <h3 id="outline-1">一、书籍基础信息</h3>
+        <p>书名：客户第一——华为客户关系管理法</p>
+        <p>作者：王占刚（华为前地区部流程质量部部长）</p>
+        <p>核心定位：B2B大客户MCR体系全景拆解</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-2">二、核心主旨与价值</h3>
+        <p>客户关系是第一生产力，而非人情往来</p>
+        <p>华为CRM：系统化、流程化、组织化能力</p>
+        <p>主线：理念→战略→规划→执行→管理→复盘</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-3">三、客户关系发展概述</h3>
+        <p>客户关系的战略价值：信任、需求、决策、口碑、壁垒</p>
+        <p>适用场景：长周期、大客户、高客单价、强竞争B2B</p>
+        <p>行业误区：重个人、轻组织；重短期、轻长期</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-4">四、客户洞察与客户选择</h3>
+        <p>客户洞察：战略、业务、痛点、决策链、预算、竞争</p>
+        <p>客户分级：价值、潜力、匹配度、风险</p>
+        <p>客户档案CP/VP：客户档案+我方档案</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-5">五、客户关系规划</h3>
+        <p>三层关系：普遍关系、关键关系、组织关系</p>
+        <p>四步法：目标→现状→策略→行动</p>
+        <p>关键动作：发展教练、组织信任、拓展卡片</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-6">六、客户接触管理</h3>
+        <p>原则：专业、对等、持续、价值</p>
+        <p>需求挖掘：SPIN、痛点-影响-方案</p>
+        <p>项目全周期：线索→机会→交付→续约</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-7">七、客户期望与满意度管理</h3>
+        <p>VOC客户声音管理</p>
+        <p>期望管理：不超支、不低标</p>
+        <p>满意度→忠诚度→推荐度闭环</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-8">八、组织与流程保障</h3>
+        <p>铁三角：客户经理+解决方案+交付服务</p>
+        <p>LTC流程：线索到回款端到端</p>
+        <p>考核：客户价值、长期健康、满意度</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-9">九、风险与合规管理</h3>
+        <p>廉洁风险、合规风险、关系依赖风险</p>
+        <p>阳光营销：长期主义胜过短期投机</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-10">十、核心工具与方法论</h3>
+        <p>客户分级矩阵、决策链地图、客户档案、拓展卡、VOC闭环</p>
+    </div>
+
+    <div class="outline-card">
+        <h3 id="outline-11">十一、总结与落地应用</h3>
+        <p>个人复盘、团队培训、避坑清单、本周行动计划</p>
+    </div>
+</div>
+
+<footer>
+    <p>《客户第一——华为客户关系管理法》王占刚 著</p>
+    <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
+</footer>
+</body>
+</html>
