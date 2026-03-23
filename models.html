@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核心工具模板 | 客户第一 — 华为客户关系管理法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        :root {
+            --primary: #0A2343;
+            --red: #D91E26;
+            --light: #F5F7FA;
+            --gray: #666;
+            --dark: #333;
+        }
+        body {
+            background: #fff;
+            color: var(--dark);
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .logo span {
+            color: var(--red);
+        }
+        .menu {
+            display: flex;
+            gap: 28px;
+        }
+        .menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        .menu a:hover, .menu a.active {
+            color: var(--red);
+        }
+        .page-title {
+            margin-top: 100px;
+            text-align: center;
+            font-size: 32px;
+            color: var(--primary);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .tool-box {
+            background: white;
+            border-radius: 12px;
+            padding: 36px 28px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+        .tool-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+        }
+        .tool-box h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+        }
+        .tool-box ul {
+            padding-left: 20px;
+            color: #444;
+            line-height: 1.9;
+        }
+        .tool-box .tag {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 6px;
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            margin-top: 16px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--red);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        @media (max-width: 768px) {
+            .menu { display: none; }
+            .tool-grid { grid-template-columns: 1fr; }
+            .page-title { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
 
+<header>
+    <div class="nav">
+        <div class="logo">《客户<span>第一</span>》读书笔记</div>
+        <div class="menu">
+            <a href="index.html">首页</a>
+            <a href="outline.html">笔记大纲</a>
+            <a href="models.html" class="active">核心工具和方法论</a>
+        </div>
+    </div>
+</header>
+
+<div class="page-title">华为CRM · 核心工具模板</div>
+
+<div class="container">
+    <div class="tool-grid">
+
+        <div class="tool-box">
+            <h3>客户分级与价值矩阵</h3>
+            <span class="tag">客户筛选</span><span class="tag">资源分配</span>
+            <ul>
+                <li>价值维度：当前产值、年度预算、利润率</li>
+                <li>潜力维度：增长空间、战略匹配、长期合作</li>
+                <li>输出：A/B/C类客户分级策略</li>
+            </ul>
+        </div>
+
+        <div class="tool-box">
+            <h3>客户决策链与关系地图</h3>
+            <span class="tag">客情</span><span class="tag">关键人</span>
+            <ul>
+                <li>决策人、使用人、影响人、审批人</li>
+                <li>支持度：支持/中立/反对/教练</li>
+                <li>关系路径：个人关系→组织关系</li>
+            </ul>
+        </div>
+
+        <div class="tool-box">
+            <h3>铁三角作战单元</h3>
+            <span class="tag">组织</span><span class="tag">LTC</span>
+            <ul>
+                <li>客户经理（AR）：负责客户与商务</li>
+                <li>解决方案（SR）：负责方案与技术</li>
+                <li>交付服务（FR）：负责履约与满意</li>
+            </ul>
+        </div>
+
+        <div class="tool-box">
+            <h3>LTC线索到回款全流程</h3>
+            <span class="tag">流程</span><span class="tag">销售管理</span>
+            <ul>
+                <li>线索→机会→方案→招投标→合同→交付→回款</li>
+                <li>节点管控、风险预警、阶段评审</li>
+                <li>端到端可复制、可量化</li>
+            </ul>
+        </div>
+
+        <div class="tool-box">
+            <h3>客户档案CP/VP模板</h3>
+            <span class="tag">客户资产</span><span class="tag">沉淀</span>
+            <ul>
+                <li>CP：客户基本信息、组织、决策链、痛点</li>
+                <li>VP：我方优势、方案、进展、风险、目标</li>
+                <li>可交接、可传承、不依赖个人</li>
+            </ul>
+        </div>
+
+        <div class="tool-box">
+            <h3>VOC满意度闭环表</h3>
+            <span class="tag">服务</span><span class="tag">复盘</span>
+            <ul>
+                <li>客户问题收集→分类→分析→整改</li>
+                <li>反馈客户→预防优化→持续提升</li>
+                <li>打造长期忠诚度与口碑</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <p>《客户第一——华为客户关系管理法》王占刚 著</p>
+    <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
+</footer>
+</body>
+</html>
