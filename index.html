@@ -1,1 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户第一 — 华为客户关系管理法 | 读书笔记主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
 
+        :root {
+            --primary: #0A2343;
+            --red: #D91E26;
+            --light: #F5F7FA;
+            --gray: #666;
+            --dark: #333;
+        }
+
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        .menu {
+            display: flex;
+            gap: 28px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            color: var(--red);
+        }
+
+        .menu a.active {
+            color: var(--red);
+        }
+
+        /* 首屏 */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(135deg, #0A2343 0%, #123A6B 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero h2 {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btns {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #b8161f;
+        }
+
+        .btn-line {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .btn-line:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* 内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+
+        /* 三大价值 */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 32px 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        /* 大纲模块 */
+        .outline-box {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 32px;
+        }
+
+        .outline-list {
+            list-style: none;
+        }
+
+        .outline-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            color: var(--gray);
+        }
+
+        .outline-list li strong {
+            color: var(--primary);
+        }
+
+        .outline-list a {
+            text-decoration: none;
+            color: inherit;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .outline-list a:hover {
+            color: var(--red);
+        }
+
+        /* 金句 */
+        .quote {
+            background: var(--light);
+            padding: 50px 20px;
+            text-align: center;
+            font-size: 20px;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        /* 底部 */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 30px;
+            }
+            .menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<header>
+    <div class="nav">
+        <div class="logo">《客户<span>第一</span>》读书笔记</div>
+        <div class="menu">
+            <a href="index.html" class="active">首页</a>
+            <a href="outline.html">笔记大纲</a>
+            <a href="models.html">核心工具和方法论</a>
+        </div>
+    </div>
+</header>
+
+<!-- 首屏 -->
+<section class="hero">
+    <h1>客户第一</h1>
+    <h2>华为客户关系管理法 · 系统读书笔记</h2>
+    <p style="margin-bottom:30px;opacity:0.8;">王占刚 著 | B2B大客户管理实战体系</p>
+    <div class="btns">
+        <a href="#" class="btn btn-primary">开始阅读笔记</a>
+        <a href="#" class="btn btn-line">查看完整大纲</a>
+    </div>
+</section>
+
+<!-- 核心内容 -->
+<div class="container">
+    <h2 class="title">核心价值体系</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>理念层</h3>
+            <p>以客户为中心的底层逻辑，客户关系是第一生产力</p>
+        </div>
+        <div class="card">
+            <h3>方法层</h3>
+            <p>MCR体系、组织化客户关系管理、全流程闭环</p>
+        </div>
+        <div class="card">
+            <h3>落地层</h3>
+            <p>工具+流程+模板，可直接复用的实战框架</p>
+        </div>
+    </div>
+
+    <h2 class="title">读书笔记大纲速览</h2>
+    <div class="outline-box">
+        <ul class="outline-list">
+            <li><a href="outline.html#outline-1"><strong>一、</strong> 书籍基础信息</a></li>
+            <li><a href="outline.html#outline-2"><strong>二、</strong> 核心主旨与价值</a></li>
+            <li><a href="outline.html#outline-3"><strong>三、</strong> 客户关系发展概述</a></li>
+            <li><a href="outline.html#outline-4"><strong>四、</strong> 客户洞察与客户选择</a></li>
+            <li><a href="outline.html#outline-5"><strong>五、</strong> 客户关系规划</a></li>
+            <li><a href="outline.html#outline-6"><strong>六、</strong> 客户接触管理</a></li>
+            <li><a href="outline.html#outline-7"><strong>七、</strong> 客户期望与满意度管理</a></li>
+            <li><a href="outline.html#outline-8"><strong>八、</strong> 组织与流程保障</a></li>
+            <li><a href="outline.html#outline-9"><strong>九、</strong> 风险与合规管理</a></li>
+            <li><a href="outline.html#outline-10"><strong>十、</strong> 核心工具与方法论</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- 金句 -->
+<section class="quote">
+    客户关系是第一生产力，而非人情往来<br>
+    最高境界：成就客户，而非搞定客户
+</section>
+
+<!-- 底部 -->
+<footer>
+    <p>《客户第一——华为客户关系管理法》王占刚 著</p>
+    <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
+</footer>
+
+</body>
+</html>
