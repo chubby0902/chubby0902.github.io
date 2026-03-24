@@ -146,11 +146,10 @@
         }
 
         #outline-preview {
-            /* 顶部导航是 fixed 的，点击锚点后避免遮挡标题 */
             scroll-margin-top: 110px;
         }
 
-        /* 三大价值 */
+        /* 三大价值卡片 */
         .cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -165,6 +164,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             transition: 0.3s;
             text-align: center;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -175,6 +175,62 @@
         .card h3 {
             color: var(--primary);
             margin-bottom: 12px;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            padding: 40px 30px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--red);
+        }
+
+        .modal h3 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-content {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .modal-content p {
+            margin-bottom: 16px;
         }
 
         /* 大纲模块 */
@@ -262,7 +318,7 @@
     <p style="margin-bottom:30px;opacity:0.8;">王占刚 著 | B2B大客户管理实战体系</p>
     <div class="btns">
         <a href="#outline-preview" class="btn btn-primary">开始阅读笔记</a>
-        <a href="outline.html" class="btn btn-line">查看完整大纲</a>
+        <a href="models.html" class="btn btn-line">查看思维导图</a>
     </div>
 </section>
 
@@ -270,15 +326,39 @@
 <div class="container">
     <h2 class="title">核心价值体系</h2>
     <div class="cards">
-        <div class="card">
+        <!-- 理念层卡片 -->
+        <div class="card" onclick="openModal('理念层', `
+            <p>核心定义：以客户为中心不是口号，而是贯穿战略、流程、组织的底层逻辑，是华为客户关系管理的第一性原理。</p>
+            <p>核心观点：</p>
+            <p>1. 客户关系是第一生产力，而非单纯的人情往来；</p>
+            <p>2. 客户需求是一切业务的起点和终点；</p>
+            <p>3. 最高境界是“成就客户”，而非“搞定客户”；</p>
+            <p>4. 客户关系的本质是信任，信任大于技巧。</p>
+        `)">
             <h3>理念层</h3>
             <p>以客户为中心的底层逻辑，客户关系是第一生产力</p>
         </div>
-        <div class="card">
+        <!-- 方法层卡片 -->
+        <div class="card" onclick="openModal('方法层', `
+            <p>核心体系：MCR（Manage Customer Relationship）大客户关系管理体系，是华为经过20+年验证的实战方法论。</p>
+            <p>核心方法：</p>
+            <p>1. 组织化客户关系管理：避免依赖个人，实现组织对组织的对接；</p>
+            <p>2. 全流程闭环：理念→战略→规划→执行→管理→复盘；</p>
+            <p>3. 客户分层管理：按价值、潜力、合作阶段分类施策；</p>
+            <p>4. 关键决策人地图：识别客户组织内的决策链和影响者。</p>
+        `)">
             <h3>方法层</h3>
             <p>MCR体系、组织化客户关系管理、全流程闭环</p>
         </div>
-        <div class="card">
+        <!-- 落地层卡片 -->
+        <div class="card" onclick="openModal('落地层', `
+            <p>核心目标：将抽象的理念和方法转化为可落地、可复制的操作动作。</p>
+            <p>核心工具：</p>
+            <p>1. 客户档案模板：统一的客户信息收集和管理框架；</p>
+            <p>2. 客户接触计划：标准化的客户拜访、沟通流程；</p>
+            <p>3. 满意度评估表：量化客户需求和体验；</p>
+            <p>4. 复盘模板：定期总结客户关系进展，优化策略。</p>
+        `)">
             <h3>落地层</h3>
             <p>工具+流程+模板，可直接复用的实战框架</p>
         </div>
@@ -307,11 +387,50 @@
     最高境界：成就客户，而非搞定客户
 </section>
 
+<!-- 弹窗容器 -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+</div>
+
 <!-- 底部 -->
 <footer>
     <p>《客户第一——华为客户关系管理法》王占刚 著</p>
     <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
 </footer>
+
+<script>
+    // 打开弹窗函数
+    function openModal(title, content) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('modalOverlay').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // 关闭弹窗函数
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // 点击弹窗遮罩层关闭
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    // ESC键关闭弹窗
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>
 
 </body>
 </html>
