@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>笔记大纲 | 客户第一 — 华为客户关系管理法</title>
+    <title>《客户第一》完整读书笔记大纲</title>
     <style>
         * {
             margin: 0;
@@ -11,17 +11,29 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         }
+
         :root {
             --primary: #0A2343;
             --red: #D91E26;
             --light: #F5F7FA;
             --gray: #666;
             --dark: #333;
+            --border: #e0e0e0;
         }
+
         body {
-            background: #fff;
+            background-color: #fff;
             color: var(--dark);
+            line-height: 1.6;
+            padding-top: 100px;
         }
+
+        /* 锚点滚动偏移 - 避免被固定导航栏遮挡 */
+        [id^="outline-"] {
+            scroll-margin-top: 100px;
+        }
+
+        /* 导航栏 */
         header {
             position: fixed;
             top: 0;
@@ -31,6 +43,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 999;
         }
+
         .nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -39,162 +52,488 @@
             align-items: center;
             padding: 16px 20px;
         }
+
         .logo {
             font-size: 20px;
             font-weight: bold;
             color: var(--primary);
         }
+
         .logo span {
             color: var(--red);
         }
+
         .menu {
             display: flex;
             gap: 28px;
         }
+
         .menu a {
             text-decoration: none;
             color: var(--dark);
             font-weight: 500;
+            transition: 0.3s;
         }
-        .menu a:hover, .menu a.active {
+
+        .menu a:hover {
             color: var(--red);
         }
+
+        .menu a.active {
+            color: var(--red);
+        }
+
+        /* 内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
         .page-title {
-            margin-top: 100px;
             text-align: center;
             font-size: 32px;
             color: var(--primary);
-            padding: 20px;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
         }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }
+
+        /* 大纲卡片样式 */
         .outline-card {
             background: var(--light);
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 20px;
-            line-height: 1.8;
+            border-radius: 10px;
+            padding: 30px 25px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: 0.3s;
         }
+
+        .outline-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
         .outline-card h3 {
             color: var(--primary);
-            margin-bottom: 12px;
-            border-left: 4px solid var(--red);
-            padding-left: 12px;
-            scroll-margin-top: 110px; /* 避免固定导航栏遮住锚点定位的标题 */
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+
+        .outline-card h3::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--red);
+            border-radius: 2px;
+        }
+
         .outline-card p {
-            color: #444;
-            padding-left: 16px;
-            margin-bottom: 8px;
+            color: var(--gray);
+            line-height: 1.7;
         }
-        footer {
-            background: var(--primary);
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            padding: 45px 35px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 26px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--red);
+        }
+
+        .modal h3 {
+            color: var(--primary);
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-content {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .modal-content p {
+            margin-bottom: 18px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .modal-content .table-title {
+            font-size: 18px;
+            color: var(--primary);
+            margin: 20px 0 12px;
+            font-weight: 600;
+        }
+
+        .modal-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 20px;
+            font-size: 16px;
+            table-layout: fixed;
+        }
+
+        .modal-content th {
+            background-color: var(--primary);
             color: white;
-            text-align: center;
-            padding: 30px 20px;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 16px;
+            word-wrap: break-word;
         }
+
+        .modal-content td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #fff;
+            word-wrap: break-word;
+        }
+
+        .modal-content tr:nth-child(even) td {
+            background-color: #f8f9fa;
+        }
+
         @media (max-width: 768px) {
-            .menu { display: none; }
-            .page-title { font-size: 26px; }
-            .outline-card { padding: 24px; }
+            .page-title {
+                font-size: 26px;
+            }
+            .outline-card {
+                padding: 20px 15px;
+            }
+            .modal {
+                padding: 30px 20px;
+            }
+            .menu {
+                display: none;
+            }
+            .modal-content table {
+                font-size: 14px;
+            }
+            .modal-content th, .modal-content td {
+                padding: 8px 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="nav">
+            <div class="logo">《客户<span>第一</span>》读书笔记</div>
+            <div class="menu">
+                <a href="index.html">首页</a>
+                <a href="outline.html" class="active">笔记大纲</a>
+                <a href="models.html">核心工具和方法论</a>
+            </div>
+        </div>
+    </header>
 
-<header>
-    <div class="nav">
-        <div class="logo">《客户<span>第一</span>》读书笔记</div>
-        <div class="menu">
-            <a href="index.html">首页</a>
-            <a href="outline.html" class="active">笔记大纲</a>
-            <a href="models.html">核心工具和方法论</a>
+    <!-- 大纲内容容器 -->
+    <div class="container">
+        <h1 class="page-title">《客户第一》完整读书笔记大纲</h1>
+
+        <!-- 1. 书籍基础信息卡片 -->
+        <div id="outline-1" class="outline-card" onclick="openModal('一、书籍基础信息', `
+            <p><strong>书名：</strong>客户第一——华为客户关系管理法</p>
+            <p><strong>作者：</strong>王占刚（华为前地区部流程质量部部长，拥有20+年华为客户关系管理实战经验）</p>
+            <p><strong>核心定位：</strong>B2B大客户MCR体系全景拆解，从理念到落地的全流程实战指南</p>
+            
+            <div class='table-title'>书籍核心信息对比</div>
+            <table>
+                <tr><th>维度</th><th>内容</th><th>核心价值</th></tr>
+                <tr><td>适用场景</td><td>ToB企业大客户销售、客户关系管理</td><td>适配长周期、高客单价B2B场景</td></tr>
+                <tr><td>解决痛点</td><td>靠个人做客户、重短期轻长期</td><td>建立组织化、可复制的CRM体系</td></tr>
+                <tr><td>核心特色</td><td>华为实战经验+体系化方法论</td><td>从理念到落地的全流程指导</td></tr>
+            </table>
+            
+            <p><strong>核心价值：</strong>摆脱“靠人情做客户”的误区，建立可复制、组织化的客户关系管理体系</p>
+        `)">
+            <h3>一、书籍基础信息</h3>
+            <p>书名：客户第一——华为客户关系管理法<br>
+               作者：王占刚（华为前地区部流程质量部部长）<br>
+               核心定位：B2B大客户MCR体系全景拆解</p>
+        </div>
+
+        <!-- 2. 核心主旨与价值卡片 -->
+        <div id="outline-2" class="outline-card" onclick="openModal('二、核心主旨与价值', `
+            <p><strong>核心主旨：</strong>客户关系是第一生产力，而非人情往来；华为CRM的本质是系统化、流程化、组织化的能力，而非个人技巧。</p>
+            
+            <div class='table-title'>核心价值对比</div>
+            <table>
+                <tr><th>传统客户关系</th><th>华为MCR体系</th></tr>
+                <tr><td>依赖个人能力</td><td>组织化能力支撑</td></tr>
+                <tr><td>单次成交导向</td><td>客户生命周期价值</td></tr>
+                <tr><td>人情维护为主</td><td>价值输出为核心</td></tr>
+                <tr><td>无体系化流程</td><td>全流程闭环管理</td></tr>
+            </table>
+            
+            <p><strong>核心主线：</strong>理念→战略→规划→执行→管理→复盘</p>
+        `)">
+            <h3>二、核心主旨与价值</h3>
+            <p>客户关系是第一生产力，而非人情往来<br>
+               华为CRM：系统化、流程化、组织化能力<br>
+               主线：理念→战略→规划→执行→管理→复盘</p>
+        </div>
+
+        <!-- 3. 客户关系发展概述卡片 -->
+        <div id="outline-3" class="outline-card" onclick="openModal('三、客户关系发展概述', `
+            <p><strong>客户关系的战略价值：</strong>信任、需求、决策、口碑、壁垒（五大核心维度）</p>
+            
+            <div class='table-title'>客户关系发展阶段</div>
+            <table>
+                <tr><th>阶段</th><th>核心特征</th><th>关键动作</th></tr>
+                <tr><td>初级（人情往来）</td><td>靠个人交情、单次合作</td><td>日常拜访、节日关怀</td></tr>
+                <tr><td>中级（价值匹配）</td><td>提供解决方案、长期合作</td><td>需求对接、方案定制</td></tr>
+                <tr><td>高级（成就客户）</td><td>战略绑定、共同成长</td><td>资源整合、生态共建</td></tr>
+            </table>
+            
+            <p><strong>适用场景：</strong>长周期、大客户、高客单价、强竞争B2B领域</p>
+            <p><strong>行业常见误区：</strong>重个人轻组织、重短期轻长期、重关系轻价值、重执行轻规划</p>
+        `)">
+            <h3>三、客户关系发展概述</h3>
+            <p>客户关系的战略价值：信任、需求、决策、口碑、壁垒<br>
+               适用场景：长周期、大客户、高客单价、强竞争B2B<br>
+               行业误区：重个人、轻组织；重短期、轻长期</p>
+        </div>
+
+        <!-- 4. 客户洞察与客户选择卡片 -->
+        <div id="outline-4" class="outline-card" onclick="openModal('四、客户洞察与客户选择', `
+            <p><strong>客户洞察核心：</strong>不止了解客户表面需求，更要穿透到客户的战略、痛点、决策链、组织架构。</p>
+            
+            <div class='table-title'>客户选择评估表</div>
+            <table>
+                <tr><th>评估维度</th><th>评估指标</th><th>评分标准（1-5分）</th></tr>
+                <tr><td>价值匹配</td><td>业务契合度、能力匹配度</td><td>5分=完全匹配，1分=基本不匹配</td></tr>
+                <tr><td>合作潜力</td><td>增长空间、合作周期</td><td>5分=长期高增长，1分=短期一次性</td></tr>
+                <tr><td>风险可控</td><td>信用等级、合作成本</td><td>5分=零风险，1分=高风险</td></tr>
+            </table>
+            
+            <p><strong>洞察工具：</strong>客户360°画像、决策链地图、需求金字塔模型</p>
+        `)">
+            <h3>四、客户洞察与客户选择</h3>
+            <p>核心：穿透客户表面需求，掌握战略/痛点/决策链<br>
+               选择原则：价值匹配、潜力优先、风险可控<br>
+               工具：客户360°画像、决策链地图</p>
+        </div>
+
+        <!-- 5. 客户关系规划卡片 -->
+        <div id="outline-5" class="outline-card" onclick="openModal('五、客户关系规划', `
+            <p><strong>规划核心：</strong>将客户关系目标与企业战略对齐，形成可落地的阶段性计划。</p>
+            
+            <div class='table-title'>客户关系规划表（示例）</div>
+            <table>
+                <tr><th>规划类型</th><th>短期（1-3个月）</th><th>中期（3-12个月）</th><th>长期（1年以上）</th></tr>
+                <tr><td>目标规划</td><td>建立初步信任</td><td>达成首次合作</td><td>成为战略合作伙伴</td></tr>
+                <tr><td>资源规划</td><td>销售+售前支持</td><td>跨部门协作</td><td>高层对接+专属团队</td></tr>
+                <tr><td>节奏规划</td><td>每周1次接触</td><td>每月2次深度沟通</td><td>季度1次战略复盘</td></tr>
+            </table>
+            
+            <p><strong>规划工具：</strong>客户关系地图、年度/季度客户规划表</p>
+        `)">
+            <h3>五、客户关系规划</h3>
+            <p>核心：对齐企业战略，制定阶段性落地计划<br>
+               工具：客户关系地图、客户规划表<br>
+               三层关系：普遍关系、关键关系、组织关系<br>
+               四步法：目标→现状→策略→行动</p>
+        </div>
+
+        <!-- 6. 客户接触管理卡片 -->
+        <div id="outline-6" class="outline-card" onclick="openModal('六、客户接触管理', `
+            <p><strong>接触核心：</strong>标准化、组织化的客户接触，避免“个人化”接触导致的不可控。</p>
+            
+            <div class='table-title'>客户接触类型对比</div>
+            <table>
+                <tr><th>接触类型</th><th>适用场景</th><th>核心目标</th><th>频率建议</th></tr>
+                <tr><td>正式接触</td><td>商务洽谈、方案汇报</td><td>推进合作、达成共识</td><td>按需（关键节点）</td></tr>
+                <tr><td>非正式接触</td><td>行业交流、客户关怀</td><td>维护关系、了解动态</td><td>每月1-2次</td></tr>
+                <tr><td>价值型接触</td><td>行业洞察分享、资源对接</td><td>输出价值、建立专业形象</td><td>每季度2-3次</td></tr>
+            </table>
+            
+            <p><strong>管理要点：</strong>接触前明确目标/准备素材、接触中记录信息/传递价值、接触后及时复盘/同步信息</p>
+            <p><strong>工具：</strong>客户接触记录表、接触计划模板</p>
+        `)">
+            <h3>六、客户接触管理</h3>
+            <p>核心：标准化、组织化接触，避免个人化不可控<br>
+               类型：正式/非正式/价值型接触<br>
+               原则：专业、对等、持续、价值<br>
+               需求挖掘：SPIN、痛点-影响-方案<br>
+               项目全周期：线索→机会→交付→续约</p>
+        </div>
+
+        <!-- 7. 客户期望与满意度管理卡片 -->
+        <div id="outline-7" class="outline-card" onclick="openModal('七、客户期望与满意度管理', `
+            <p><strong>核心：</strong>满意度=感知价值-期望，管理期望更重要，而非一味提高交付。</p>
+            
+            <div class='table-title'>期望与满意度管理要点</div>
+            <table>
+                <tr><th>管理维度</th><th>核心内容</th><th>关键动作</th></tr>
+                <tr><td>期望管理</td><td>合理设定、主动引导、动态调整</td><td>沟通前置、承诺管理、定期复盘</td></tr>
+                <tr><td>满意度提升</td><td>超越关键期望、快速响应、量化调研</td><td>满意度调研、问题闭环、持续改进</td></tr>
+            </table>
+            
+            <p><strong>管理工具：</strong>满意度调研问卷、客户健康度评估表、问题闭环跟踪表</p>
+            <p><strong>华为实践：</strong>定期开展VOC（客户之声）收集，将客户反馈转化为内部改进项</p>
+        `)">
+            <h3>七、客户期望与满意度管理</h3>
+            <p>核心：满意度=感知价值-期望，管理期望更重要<br>
+               期望管理：合理设定/主动引导/动态调整<br>
+               满意度提升：超关键期望、快响应、量化调研</p>
+        </div>
+
+        <!-- 8. 组织与流程保障卡片 -->
+        <div id="outline-8" class="outline-card" onclick="openModal('八、组织与流程保障', `
+            <p><strong>核心：</strong>客户关系管理不是销售部门的事，需要全组织、全流程的支撑。</p>
+            
+            <div class='table-title'>各部门职责分工</div>
+            <table>
+                <tr><th>部门</th><th>核心职责</th><th>关键输出</th></tr>
+                <tr><td>销售部门</td><td>客户对接、需求收集</td><td>客户信息、合作意向</td></tr>
+                <tr><td>售前部门</td><td>方案制定、技术支撑</td><td>定制化解决方案</td></tr>
+                <tr><td>售后部门</td><td>服务交付、问题解决</td><td>客户满意度报告</td></tr>
+                <tr><td>产品部门</td><td>产品匹配、迭代优化</td><td>产品适配方案</td></tr>
+            </table>
+            
+            <p><strong>考核机制：</strong>将客户关系指标纳入团队/个人考核，而非只看业绩</p>
+            <p><strong>流程保障：</strong>信息共享、问题快速解决、定期复盘优化</p>
+        `)">
+            <h3>八、组织与流程保障</h3>
+            <p>核心：全组织/全流程支撑，非仅销售部门负责<br>
+               铁三角：客户经理+解决方案+交付服务<br>
+               考核：客户价值、长期健康、满意度<br>
+               LTC流程：线索到回款端到端</p>
+        </div>
+
+        <!-- 9. 风险与合规管理卡片 -->
+        <div id="outline-9" class="outline-card" onclick="openModal('九、风险与合规管理', `
+            <p><strong>核心：</strong>在合规前提下管控客户关系风险，避免因违规/风险导致合作中断。</p>
+            
+            <div class='table-title'>客户关系风险评估表</div>
+            <table>
+                <tr><th>风险类型</th><th>风险点</th><th>发生概率</th><th>影响程度</th><th>防控措施</th></tr>
+                <tr><td>合规风险</td><td>商业贿赂、数据安全</td><td>低</td><td>极高</td><td>合规培训、审计监督</td></tr>
+                <tr><td>合作风险</td><td>信用问题、付款延迟</td><td>中</td><td>高</td><td>信用审核、分期收款</td></tr>
+                <tr><td>关系风险</td><td>决策人变动、竞品介入</td><td>高</td><td>中</td><td>多触点对接、价值绑定</td></tr>
+            </table>
+            
+            <p><strong>华为原则：</strong>不触碰合规红线，靠价值而非利益绑定客户</p>
+            <p><strong>管控措施：</strong>合规培训、风险预警、应急预案、定期审计</p>
+        `)">
+            <h3>九、风险与合规管理</h3>
+            <p>核心：合规前提下管控风险，避免合作中断<br>
+               风险类型：合规/合作/关系风险<br>
+               管控：合规培训、风险预警、应急预案</p>
+        </div>
+
+        <!-- 10. 核心工具与方法论卡片 -->
+        <div id="outline-10" class="outline-card" onclick="openModal('十、核心工具与方法论', `
+            <p><strong>MCR体系核心：</strong>组织化、价值型客户关系，全流程闭环管理</p>
+            
+            <div class='table-title'>核心工具使用场景</div>
+            <table>
+                <tr><th>工具名称</th><th>使用阶段</th><th>核心作用</th><th>使用频率</th></tr>
+                <tr><td>客户360°画像</td><td>客户洞察</td><td>全面了解客户</td><td>首次接触+季度更新</td></tr>
+                <tr><td>决策链地图</td><td>客户洞察/规划</td><td>明确关键联系人</td><td>合作初期+动态更新</td></tr>
+                <tr><td>健康度评估</td><td>管理/复盘</td><td>量化客户关系状态</td><td>月度评估</td></tr>
+                <tr><td>接触计划模板</td><td>执行</td><td>标准化客户接触</td><td>每周制定</td></tr>
+                <tr><td>复盘模板</td><td>复盘</td><td>总结改进</td><td>项目结束/季度复盘</td></tr>
+            </table>
+            
+            <p><strong>落地要点：</strong>工具不是形式，要融入日常工作，定期优化迭代</p>
+        `)">
+            <h3>十、核心工具与方法论</h3>
+            <p>核心工具：360°画像、决策链地图、健康度评估等<br>
+               方法论：组织化/价值型客户关系、全流程闭环<br>
+               落地：融入日常，定期优化</p>
         </div>
     </div>
-</header>
 
-<div class="page-title">《客户第一》完整读书笔记大纲</div>
-
-<div class="container">
-    <div class="outline-card">
-        <h3 id="outline-1">一、书籍基础信息</h3>
-        <p>书名：客户第一——华为客户关系管理法</p>
-        <p>作者：王占刚（华为前地区部流程质量部部长）</p>
-        <p>核心定位：B2B大客户MCR体系全景拆解</p>
+    <!-- 弹窗容器 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
     </div>
 
-    <div class="outline-card">
-        <h3 id="outline-2">二、核心主旨与价值</h3>
-        <p>客户关系是第一生产力，而非人情往来</p>
-        <p>华为CRM：系统化、流程化、组织化能力</p>
-        <p>主线：理念→战略→规划→执行→管理→复盘</p>
-    </div>
+    <script>
+        // 打开弹窗
+        function openModal(title, content) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
 
-    <div class="outline-card">
-        <h3 id="outline-3">三、客户关系发展概述</h3>
-        <p>客户关系的战略价值：信任、需求、决策、口碑、壁垒</p>
-        <p>适用场景：长周期、大客户、高客单价、强竞争B2B</p>
-        <p>行业误区：重个人、轻组织；重短期、轻长期</p>
-    </div>
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
-    <div class="outline-card">
-        <h3 id="outline-4">四、客户洞察与客户选择</h3>
-        <p>客户洞察：战略、业务、痛点、决策链、预算、竞争</p>
-        <p>客户分级：价值、潜力、匹配度、风险</p>
-        <p>客户档案CP/VP：客户档案+我方档案</p>
-    </div>
+        // 点击遮罩层关闭弹窗
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
 
-    <div class="outline-card">
-        <h3 id="outline-5">五、客户关系规划</h3>
-        <p>三层关系：普遍关系、关键关系、组织关系</p>
-        <p>四步法：目标→现状→策略→行动</p>
-        <p>关键动作：发展教练、组织信任、拓展卡片</p>
-    </div>
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
 
-    <div class="outline-card">
-        <h3 id="outline-6">六、客户接触管理</h3>
-        <p>原则：专业、对等、持续、价值</p>
-        <p>需求挖掘：SPIN、痛点-影响-方案</p>
-        <p>项目全周期：线索→机会→交付→续约</p>
-    </div>
-
-    <div class="outline-card">
-        <h3 id="outline-7">七、客户期望与满意度管理</h3>
-        <p>VOC客户声音管理</p>
-        <p>期望管理：不超支、不低标</p>
-        <p>满意度→忠诚度→推荐度闭环</p>
-    </div>
-
-    <div class="outline-card">
-        <h3 id="outline-8">八、组织与流程保障</h3>
-        <p>铁三角：客户经理+解决方案+交付服务</p>
-        <p>LTC流程：线索到回款端到端</p>
-        <p>考核：客户价值、长期健康、满意度</p>
-    </div>
-
-    <div class="outline-card">
-        <h3 id="outline-9">九、风险与合规管理</h3>
-        <p>廉洁风险、合规风险、关系依赖风险</p>
-        <p>阳光营销：长期主义胜过短期投机</p>
-    </div>
-
-    <div class="outline-card">
-        <h3 id="outline-10">十、核心工具与方法论</h3>
-        <p>客户分级矩阵、决策链地图、客户档案、拓展卡、VOC闭环</p>
-    </div>
-
-    <div class="outline-card">
-        <h3 id="outline-11">十一、总结与落地应用</h3>
-        <p>个人复盘、团队培训、避坑清单、本周行动计划</p>
-    </div>
-</div>
-
-<footer>
-    <p>《客户第一——华为客户关系管理法》王占刚 著</p>
-    <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
-</footer>
+        // 处理URL锚点跳转
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
