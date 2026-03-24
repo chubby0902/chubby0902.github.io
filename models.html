@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>核心工具模板 | 客户第一 — 华为客户关系管理法</title>
+    <title>核心工具思维导图 | 客户第一 — 华为客户关系管理法</title>
     <style>
         * {
             margin: 0;
@@ -77,15 +77,16 @@
             gap: 30px;
         }
         .tool-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(10, 35, 67, 0.12);
             border-radius: 12px;
             padding: 36px 28px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            box-shadow: 0 6px 20px rgba(10,35,67,0.06);
             transition: 0.3s;
         }
         .tool-box:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(10,35,67,0.12);
         }
         .tool-box h3 {
             color: var(--primary);
@@ -93,6 +94,26 @@
             margin-bottom: 16px;
             border-bottom: 2px solid var(--light);
             padding-bottom: 10px;
+        }
+
+        .view-diagram-btn {
+            margin-top: 16px;
+            width: 33.333%;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(217, 30, 38, 0.25);
+            background: rgba(217, 30, 38, 0.08);
+            color: var(--red);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            display: block;
+            text-align: center;
+        }
+
+        .view-diagram-btn:hover {
+            background: rgba(217, 30, 38, 0.14);
         }
         .tool-box ul {
             padding-left: 20px;
@@ -130,6 +151,69 @@
             .tool-grid { grid-template-columns: 1fr; }
             .page-title { font-size: 26px; }
         }
+
+        /* 弹窗：点击卡片后在同一页面展示示意图/思维导图 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            background: #fff;
+            border-radius: 14px;
+            overflow: auto;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #f7f9fc;
+            border-bottom: 1px solid #edf1f7;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid #e7ebf3;
+            background: white;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 32px;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 14px;
+        }
+
+        .modal-body svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -140,7 +224,7 @@
         <div class="menu">
             <a href="index.html">首页</a>
             <a href="outline.html">笔记大纲</a>
-            <a href="models.html" class="active">核心工具和方法论</a>
+            <a href="models.html" class="active">核心工具思维导图</a>
         </div>
     </div>
 </header>
@@ -150,7 +234,7 @@
 <div class="container">
     <div class="tool-grid">
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="value-matrix" aria-label="客户分级与价值矩阵示意图">
             <h3>客户分级与价值矩阵</h3>
             <span class="tag">客户筛选</span><span class="tag">资源分配</span>
             <ul>
@@ -158,9 +242,10 @@
                 <li>潜力维度：增长空间、战略匹配、长期合作</li>
                 <li>输出：A/B/C类客户分级策略</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="value-matrix">查看思维导图</button>
         </div>
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="decision-chain-map" aria-label="客户决策链与关系地图示意图">
             <h3>客户决策链与关系地图</h3>
             <span class="tag">客情</span><span class="tag">关键人</span>
             <ul>
@@ -168,9 +253,10 @@
                 <li>支持度：支持/中立/反对/教练</li>
                 <li>关系路径：个人关系→组织关系</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="decision-chain-map">查看思维导图</button>
         </div>
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="triad-ltc" aria-label="铁三角作战单元示意图">
             <h3>铁三角作战单元</h3>
             <span class="tag">组织</span><span class="tag">LTC</span>
             <ul>
@@ -178,9 +264,10 @@
                 <li>解决方案（SR）：负责方案与技术</li>
                 <li>交付服务（FR）：负责履约与满意</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="triad-ltc">查看思维导图</button>
         </div>
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="ltc-flow" aria-label="LTC线索到回款全流程示意图">
             <h3>LTC线索到回款全流程</h3>
             <span class="tag">流程</span><span class="tag">销售管理</span>
             <ul>
@@ -188,9 +275,10 @@
                 <li>节点管控、风险预警、阶段评审</li>
                 <li>端到端可复制、可量化</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="ltc-flow">查看思维导图</button>
         </div>
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="cp-vp" aria-label="客户档案CP/VP模板示意图">
             <h3>客户档案CP/VP模板</h3>
             <span class="tag">客户资产</span><span class="tag">沉淀</span>
             <ul>
@@ -198,9 +286,10 @@
                 <li>VP：我方优势、方案、进展、风险、目标</li>
                 <li>可交接、可传承、不依赖个人</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="cp-vp">查看思维导图</button>
         </div>
 
-        <div class="tool-box">
+        <div class="tool-box" data-diagram="voc-closed-loop" aria-label="VOC满意度闭环表示意图">
             <h3>VOC满意度闭环表</h3>
             <span class="tag">服务</span><span class="tag">复盘</span>
             <ul>
@@ -208,8 +297,20 @@
                 <li>反馈客户→预防优化→持续提升</li>
                 <li>打造长期忠诚度与口碑</li>
             </ul>
+            <button type="button" class="view-diagram-btn" data-diagram="voc-closed-loop">查看思维导图</button>
         </div>
 
+    </div>
+</div>
+
+<!-- 点击卡片弹窗（同页面小窗） -->
+<div id="diagramModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="diagramModalTitle">
+        <div class="modal-header">
+            <div id="diagramModalTitle" class="modal-title"></div>
+            <button type="button" class="modal-close" id="diagramModalClose" aria-label="关闭">×</button>
+        </div>
+        <div class="modal-body" id="diagramModalBody"></div>
     </div>
 </div>
 
@@ -217,5 +318,206 @@
     <p>《客户第一——华为客户关系管理法》王占刚 著</p>
     <p style="margin-top:8px; font-size:14px; opacity:0.8;">本读书笔记仅供学习使用</p>
 </footer>
+
+<script>
+    (function () {
+        const modal = document.getElementById('diagramModal');
+        const closeBtn = document.getElementById('diagramModalClose');
+        const titleEl = document.getElementById('diagramModalTitle');
+        const bodyEl = document.getElementById('diagramModalBody');
+
+        const svgByKey = {
+            "value-matrix": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">客户分级与价值矩阵</text>
+                    <circle cx="450" cy="190" r="86" fill="#FFFFFF" stroke="#D91E26" stroke-width="5"/>
+                    <text x="450" y="200" text-anchor="middle" font-size="20" font-weight="700" fill="#0A2343">价值矩阵</text>
+
+                    <line x1="450" y1="276" x2="220" y2="340" stroke="#0A2343" stroke-opacity="0.25" stroke-width="4"/>
+                    <line x1="450" y1="276" x2="680" y2="340" stroke="#0A2343" stroke-opacity="0.25" stroke-width="4"/>
+
+                    <rect x="95" y="305" width="250" height="140" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="220" y="345" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">价值维度</text>
+                    <text x="220" y="375" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">当前产值 / 年度预算</text>
+                    <text x="220" y="402" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">利润率</text>
+
+                    <rect x="555" y="305" width="250" height="140" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="680" y="345" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">潜力维度</text>
+                    <text x="680" y="375" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">增长空间 / 战略匹配</text>
+                    <text x="680" y="402" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">长期合作</text>
+
+                    <text x="450" y="485" text-anchor="middle" font-size="16" font-weight="600" fill="#0A2343">输出：A/B/C 类客户分级策略</text>
+                </svg>
+            `,
+            "decision-chain-map": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">客户决策链与关系地图</text>
+
+                    <rect x="340" y="80" width="220" height="70" rx="18" fill="#FFFFFF" stroke="#D91E26" stroke-width="5"/>
+                    <text x="450" y="125" text-anchor="middle" font-size="20" font-weight="700" fill="#0A2343">关键人地图</text>
+
+                    <g stroke="#0A2343" stroke-opacity="0.25" stroke-width="4">
+                        <line x1="450" y1="150" x2="220" y2="230"/>
+                        <line x1="450" y1="150" x2="450" y2="270"/>
+                        <line x1="450" y1="150" x2="680" y2="230"/>
+                    </g>
+
+                    <rect x="95" y="205" width="260" height="120" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="225" y="245" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">决策链</text>
+                    <text x="225" y="270" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">决策人 / 使用人</text>
+                    <text x="225" y="295" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">影响人 / 审批人</text>
+
+                    <rect x="320" y="255" width="260" height="120" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="450" y="295" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">支持度</text>
+                    <text x="450" y="320" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">支持 / 中立 / 反对</text>
+                    <text x="450" y="345" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">/ 教练</text>
+
+                    <rect x="555" y="205" width="260" height="120" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="685" y="245" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">关系路径</text>
+                    <text x="685" y="270" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">个人关系 → 组织关系</text>
+
+                    <text x="450" y="485" text-anchor="middle" font-size="16" font-weight="600" fill="#0A2343">用于：锁定关键人 + 找到关系路径</text>
+                </svg>
+            `,
+            "triad-ltc": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">铁三角作战单元</text>
+
+                    <circle cx="450" cy="180" r="74" fill="#FFFFFF" stroke="#D91E26" stroke-width="5"/>
+                    <text x="450" y="190" text-anchor="middle" font-size="20" font-weight="700" fill="#0A2343">LTC</text>
+
+                    <g stroke="#0A2343" stroke-opacity="0.25" stroke-width="4">
+                        <line x1="450" y1="254" x2="230" y2="340"/>
+                        <line x1="450" y1="254" x2="670" y2="340"/>
+                        <line x1="450" y1="254" x2="450" y2="380"/>
+                    </g>
+
+                    <rect x="70" y="300" width="260" height="150" rx="16" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="200" y="342" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">客户经理（AR）</text>
+                    <text x="200" y="370" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">负责：客户与商务</text>
+
+                    <rect x="570" y="300" width="260" height="150" rx="16" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="700" y="342" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">解决方案（SR）</text>
+                    <text x="700" y="370" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">负责：方案与技术</text>
+
+                    <rect x="320" y="350" width="260" height="150" rx="16" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35"/>
+                    <text x="450" y="392" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">交付服务（FR）</text>
+                    <text x="450" y="420" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">负责：履约与满意</text>
+                </svg>
+            `,
+            "ltc-flow": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">LTC线索到回款全流程</text>
+
+                    <line x1="115" y1="215" x2="785" y2="215" stroke="#0A2343" stroke-opacity="0.25" stroke-width="4"/>
+
+                    <g>
+                        <rect x="70" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="130" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">线索</text>
+
+                        <rect x="205" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="265" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">机会</text>
+
+                        <rect x="340" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="400" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">方案</text>
+
+                        <rect x="475" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="535" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">招投标</text>
+
+                        <rect x="610" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="670" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">合同</text>
+
+                        <rect x="745" y="160" width="120" height="110" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                        <text x="805" y="205" text-anchor="middle" font-size="15" font-weight="700" fill="#0A2343">交付</text>
+                    </g>
+
+                    <text x="450" y="290" text-anchor="middle" font-size="16" font-weight="700" fill="#0A2343">节点管控 · 风险预警 · 阶段评审</text>
+
+                    <rect x="365" y="330" width="170" height="70" rx="12" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <text x="450" y="375" text-anchor="middle" font-size="16" font-weight="700" fill="#0A2343">回款</text>
+                </svg>
+            `,
+            "cp-vp": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">客户档案CP/VP模板</text>
+
+                    <rect x="80" y="120" width="360" height="300" rx="16" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <rect x="460" y="120" width="360" height="300" rx="16" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+
+                    <text x="260" y="180" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">CP（客户档案）</text>
+                    <text x="260" y="212" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">客户基本信息 / 组织</text>
+                    <text x="260" y="238" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">决策链 / 痛点</text>
+
+                    <text x="640" y="180" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">VP（我方档案）</text>
+                    <text x="640" y="212" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">我方优势 / 方案</text>
+                    <text x="640" y="238" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">进展 / 风险 / 目标</text>
+
+                    <text x="450" y="475" text-anchor="middle" font-size="16" font-weight="600" fill="#0A2343">用于：可交接、可传承、不依赖个人</text>
+                </svg>
+            `,
+            "voc-closed-loop": `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+                    <rect width="900" height="520" rx="16" fill="#F5F7FA"/>
+                    <text x="450" y="55" text-anchor="middle" font-size="28" font-weight="700" fill="#0A2343">VOC满意度闭环表</text>
+
+                    <rect x="360" y="95" width="180" height="70" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <text x="450" y="140" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">VOC闭环</text>
+
+                    <g stroke="#0A2343" stroke-opacity="0.25" stroke-width="4">
+                        <line x1="450" y1="165" x2="450" y2="240"/>
+                        <line x1="450" y1="310" x2="450" y2="385"/>
+                    </g>
+
+                    <rect x="110" y="220" width="310" height="90" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <text x="265" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">分析整改链</text>
+                    <text x="265" y="275" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">收集→分类→分析→整改</text>
+
+                    <rect x="480" y="220" width="310" height="90" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <text x="635" y="250" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">反馈优化链</text>
+                    <text x="635" y="275" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">反馈→预防优化→持续提升</text>
+
+                    <rect x="300" y="350" width="300" height="90" rx="14" fill="#FFFFFF" stroke="#D91E26" stroke-opacity="0.35" stroke-width="3"/>
+                    <text x="450" y="385" text-anchor="middle" font-size="18" font-weight="700" fill="#0A2343">长期忠诚与口碑</text>
+                    <text x="450" y="412" text-anchor="middle" font-size="15" font-weight="600" fill="#0A2343">让满意变成推荐与复购</text>
+                </svg>
+            `
+        };
+
+        function openModal(key, title) {
+            titleEl.textContent = title || '示意图';
+            bodyEl.innerHTML = svgByKey[key] || '<div style="padding:16px;color:#666;">暂无该卡片的示意图内容</div>';
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+            bodyEl.scrollTop = 0;
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        document.querySelectorAll('.view-diagram-btn[data-diagram]').forEach((btn) => {
+            const key = btn.getAttribute('data-diagram');
+            const box = btn.closest('.tool-box');
+            const h3 = box ? box.querySelector('h3') : null;
+            const title = h3 ? h3.textContent : '';
+
+            btn.addEventListener('click', () => openModal(key, title));
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    })();
+</script>
 </body>
 </html>
